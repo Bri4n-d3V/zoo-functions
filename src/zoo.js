@@ -1,7 +1,10 @@
+const { species } = require('./data');
 const data = require('./data');
 
-function getSpeciesByIds(ids) {
+// Ajuda de Biza e Martin para fazer os valores dentro do parametro ids serem retornados (ids.soeme)
+function getSpeciesByIds(...ids) {
   // seu código aqui
+  return species.filter((animal) => ids.some((id) => animal.id === id));
 }
 
 function getAnimalsOlderThan(animal, age) {

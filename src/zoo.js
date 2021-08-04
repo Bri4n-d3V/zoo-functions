@@ -1,16 +1,14 @@
-const { species } = require('./data');
+const { species, employees } = require('./data');
 const data = require('./data');
 
 // Ajuda de Biza e Martin para fazer os valores dentro do parametro ids serem retornados (ids.soeme)
 function getSpeciesByIds(...ids) {
-  // seu código aqui
   return species.filter((animal) => ids.some((id) => animal.id === id));
 }
 
 // Ajuda do Martin com a ideia de entrar dentro da espécie de cada animal.
 // catchAnimal.residents entra dentro do array dos residentes, com isso podemos entrar na chave age de cada um.
 function getAnimalsOlderThan(animal, age) {
-  // seu código aqui
   const sameName = species.some((specie) => specie.name === animal);
   const catchAnimal = species.find((specie) => specie.name === animal);
   const older = catchAnimal.residents.every((value) => value.age > age);
@@ -19,11 +17,16 @@ function getAnimalsOlderThan(animal, age) {
 }
 
 function getEmployeeByName(employeeName) {
-  // seu código aqui
+  const firstName = employees.find((worker) => worker.firstName === employeeName);
+  const lastName = employees.find((worker) => worker.lastName === employeeName);
+
+  if (firstName) return firstName;
+  if (lastName) return lastName;
+  return {};
 }
 
 function createEmployee(personalInfo, associatedWith) {
-  // seu código aqui
+
 }
 
 function isManager(id) {

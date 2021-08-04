@@ -7,8 +7,15 @@ function getSpeciesByIds(...ids) {
   return species.filter((animal) => ids.some((id) => animal.id === id));
 }
 
+// Ajuda do Martin com a ideia de entrar dentro da espécie de cada animal.
+// catchAnimal.residents entra dentro do array dos residentes, com isso podemos entrar na chave age de cada um.
 function getAnimalsOlderThan(animal, age) {
   // seu código aqui
+  const sameName = species.some((specie) => specie.name === animal);
+  const catchAnimal = species.find((specie) => specie.name === animal);
+  const older = catchAnimal.residents.every((value) => value.age > age);
+
+  return (sameName && older);
 }
 
 function getEmployeeByName(employeeName) {
@@ -27,7 +34,7 @@ function addEmployee(id, firstName, lastName, managers, responsibleFor) {
   // seu código aqui
 }
 
-function countAnimals(species) {
+function countAnimals(animal) {
   // seu código aqui
 }
 

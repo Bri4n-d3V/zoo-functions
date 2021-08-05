@@ -2,6 +2,7 @@ const {
   species,
   employees,
   prices,
+  hours,
 } = require('./data');
 const data = require('./data');
 
@@ -69,7 +70,9 @@ function countAnimals(singleAnimal) {
 function calculateEntry(entrants) {
   if (!entrants) return 0;
 
-  const { Adult = 0, Senior = 0, Child = 0 } = entrants;
+  const {
+    Adult = 0, Senior = 0, Child = 0,
+  } = entrants;
 
   const adult = prices.Adult * Adult;
   const senior = prices.Senior * Senior;
@@ -82,8 +85,26 @@ function getAnimalMap(options) {
   // seu código aqui
 }
 
+// Ajuda do Pablo para trabalhar entre arrays e objetos;
 function getSchedule(dayName) {
-  // seu código aqui
+  const entries = Object.entries(hours);
+  const obj = {};
+
+  entries.forEach((day) => {
+    if (day[1].open === 0 && day[1].close === 0) {
+      obj[day[0]] = 'CLOSED';
+      return obj;
+    }
+    obj[day[0]] = `Open from ${day[1].open}am until ${day[1].close - 12}pm`;
+    return obj;
+  });
+
+  if (!dayName) return obj;
+  if (dayName) {
+    const newObj = {};
+    newObj[dayName] = obj[dayName];
+    return newObj;
+  }
 }
 
 function getOldestFromFirstSpecies(id) {

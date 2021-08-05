@@ -52,8 +52,17 @@ function addEmployee(id, firstName, lastName, managers = [], responsibleFor = []
   });
 }
 
-function countAnimals(animal) {
-  // seu código aqui
+// Consulta ao código do Oliveira para manipulação de objetos;
+function countAnimals(singleAnimal) {
+  const obj = {};
+
+  species.forEach((animal) => {
+    obj[animal.name] = animal.residents.length;
+  });
+
+  // se o parametro estiver vazio, retorna obj com species.name como chave e species.residents.length como valor; se o parametro estiver com species.name, recebe species.residents.length;
+  return !singleAnimal ? obj : species.find((animal) =>
+    animal.name === singleAnimal).residents.length;
 }
 
 function calculateEntry(entrants) {

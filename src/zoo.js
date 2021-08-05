@@ -1,4 +1,7 @@
-const { species, employees } = require('./data');
+const {
+  species,
+  employees,
+} = require('./data');
 const data = require('./data');
 
 // Ajuda de Biza e Martin para fazer os valores dentro do parametro ids serem retornados (ids.some)
@@ -27,12 +30,16 @@ function getEmployeeByName(employeeName) {
 
 // Ajuda do Martin e Daniel para usar o object destruction.
 function createEmployee(personalInfo, associatedWith) {
-  return { ...personalInfo, ...associatedWith };
+  return {
+    ...personalInfo,
+    ...associatedWith,
+  };
   // return console.log(Object.assign(personalInfo, associatedWith));
 }
 
+// Ajuda do Rod com refatoramento do código.
 function isManager(id) {
-  // seu código aqui
+  return employees.some((ident) => ident.managers.some((idManager) => idManager === id));
 }
 
 function addEmployee(id, firstName, lastName, managers, responsibleFor) {

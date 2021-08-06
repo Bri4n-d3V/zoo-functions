@@ -1,4 +1,7 @@
 const {
+  TestScheduler,
+} = require('jest');
+const {
   species,
   employees,
   prices,
@@ -107,8 +110,14 @@ function getSchedule(dayName) {
   }
 }
 
+// SOZINHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!!!!
 function getOldestFromFirstSpecies(id) {
-  // seu código aqui
+  const findEmployee = employees.find((worker) => worker.id === id);
+  const firstAnimalResp = findEmployee.responsibleFor[0];
+  const residentAnimals = species.find((animal) => animal.id === firstAnimalResp).residents;
+  const sortResidents = residentAnimals.sort((a, b) => b.age - a.age);
+
+  return (Object.values(sortResidents[0]));
 }
 
 function increasePrices(percentage) {

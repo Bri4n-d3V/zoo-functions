@@ -117,8 +117,15 @@ function getOldestFromFirstSpecies(id) {
   return (Object.values(sortResidents[0]));
 }
 
+// Ajuda do Oliveira para o arredondamento correto.
 function increasePrices(percentage) {
   // seu código aqui
+  const add = percentage / 100 + 1;
+  prices.Adult = Math.round((prices.Adult * add) * 100) / 100;
+  prices.Senior = Math.round((prices.Senior * add) * 100) / 100;
+  prices.Child = Math.round((prices.Child * add) * 100) / 100;
+
+  return prices;
 }
 
 function getEmployeeCoverage(idOrName) {

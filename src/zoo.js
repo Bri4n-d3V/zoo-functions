@@ -119,7 +119,6 @@ function getOldestFromFirstSpecies(id) {
 
 // Ajuda do Oliveira para o arredondamento correto.
 function increasePrices(percentage) {
-  // seu código aqui
   const add = percentage / 100 + 1;
   prices.Adult = Math.round((prices.Adult * add) * 100) / 100;
   prices.Senior = Math.round((prices.Senior * add) * 100) / 100;

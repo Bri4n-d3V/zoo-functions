@@ -1,7 +1,4 @@
 const {
-  TestScheduler,
-} = require('jest');
-const {
   species,
   employees,
   prices,

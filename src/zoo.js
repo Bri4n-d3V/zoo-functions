@@ -93,7 +93,18 @@ function getAnimalMap(options = {}) {
     return obj; // retorno sem parâmetro;
   }
 
-  if (options.includeNames === true && options.sorted === true) { // teste 3;
+  if (options.includeNames && options.sex && options.sorted) { // teste 5;
+    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+    species.forEach((animal) => {
+      obj[animal.location].push({ [animal.name]:
+        animal.residents.filter((resident) =>
+          (resident.sex === options.sex)).map((resident) =>
+          resident.name).sort() });
+    });
+    return obj;
+  }
+
+  if (options.includeNames && options.sorted) { // teste 3;
     const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
     species.forEach((animal) => {
       obj[animal.location].push({ [animal.name]:
@@ -122,7 +133,7 @@ function getAnimalMap(options = {}) {
     return obj;
   }
 }
-// getAnimalMap({ includeNames: true, sex: 'male' });
+// getAnimalMap({ includeNames: true, sex: 'male', sorted: true });
 
 // Ajuda do Pablo para trabalhar entre arrays e objetos;
 function getSchedule(dayName) {

@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
 const {
   species,
@@ -82,6 +83,7 @@ function calculateEntry(entrants) {
   return adult + senior + child;
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function getAnimalMap(options = {}) {
   if (!options.includeNames) { // teste 1 e 6;
     const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
@@ -90,6 +92,7 @@ function getAnimalMap(options = {}) {
     }); // func filta animais de acordo com local e add em arrray;
     return obj; // retorno sem parâmetro;
   }
+
   if (options.includeNames === true && options.sorted === true) { // teste 3;
     const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
     species.forEach((animal) => {
@@ -98,6 +101,18 @@ function getAnimalMap(options = {}) {
     });
     return obj;
   }
+
+  if (options.includeNames && options.sex) { // teste 4;
+    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+    species.forEach((animal) => {
+      obj[animal.location].push({ [animal.name]:
+        animal.residents.filter((resident) =>
+          (resident.sex === options.sex)).map((resident) =>
+          resident.name) });
+    });
+    return obj;
+  }
+
   if (options.includeNames) { // teste 2;
     const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
     species.forEach((animal) => {
@@ -107,7 +122,7 @@ function getAnimalMap(options = {}) {
     return obj;
   }
 }
-// getAnimalMap({ includeNames: true, sorted: true });
+// getAnimalMap({ includeNames: true, sex: 'male' });
 
 // Ajuda do Pablo para trabalhar entre arrays e objetos;
 function getSchedule(dayName) {

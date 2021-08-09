@@ -127,26 +127,36 @@ function increasePrices(percentage) {
   return prices;
 }
 
+/* const IdInName = (arrIds) => {
+  const newArr = [];
+  arrIds.forEach((id) => {
+    species.forEach((animal) => {
+      if (animal.id === id) {
+        newArr.push(animal.name);
+      }
+    });
+  });
+  return newArr;
+}; */
 function getEmployeeCoverage(idOrName) {
   const obj = {};
   const resp = employees.map((worker) => worker.responsibleFor);
-  const IdInName = (arrIds) => {
-    const newArr = [];
-    arrIds.forEach((id) => {
-      species.forEach((animal) => {
-        if (animal.id === id) {
-          newArr.push(animal.name);
-        }
-      });
-    });
-    return newArr;
-  };
+  const IdInName = (arrIds) => arrIds.reduce((acc, id) => (
+    acc.concat(species.find((animal) => animal.id === id).name)
+  ), []); // função recebe array de ids e devolve array de nomes (antes de refatorado);
   employees.forEach((worker, i) => {
     obj[`${worker.firstName} ${worker.lastName}`] = IdInName(resp[i]);
-  });
-  if (!idOrName) return obj;
+  }); // função que adiciona chaves com valores no objeto criado;
+  const newObj = {};
+  employees.forEach((element) => {
+    if (idOrName === element.firstName
+      || idOrName === element.lastName
+      || idOrName === element.id) {
+      newObj[`${element.firstName} ${element.lastName}`] = IdInName(element.responsibleFor);
+    }
+  }); // função que adiciona chave com valor filtrados no objeto criado;
+  return (!idOrName) ? obj : newObj;
 }
-getEmployeeCoverage();
 
 module.exports = {
   calculateEntry,

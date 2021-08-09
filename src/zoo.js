@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 const {
   species,
   employees,
@@ -81,9 +82,32 @@ function calculateEntry(entrants) {
   return adult + senior + child;
 }
 
-function getAnimalMap(options) {
-  // seu código aqui
+function getAnimalMap(options = {}) {
+  if (!options.includeNames) { // teste 1 e 6;
+    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+    species.forEach((animal) => {
+      obj[animal.location].push(animal.name);
+    }); // func filta animais de acordo com local e add em arrray;
+    return obj; // retorno sem parâmetro;
+  }
+  if (options.includeNames === true && options.sorted === true) { // teste 3;
+    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+    species.forEach((animal) => {
+      obj[animal.location].push({ [animal.name]:
+        animal.residents.map((resident) => resident.name).sort() });
+    });
+    return obj;
+  }
+  if (options.includeNames) { // teste 2;
+    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+    species.forEach((animal) => {
+      obj[animal.location].push({ [animal.name]:
+        animal.residents.map((resident) => resident.name) });
+    });
+    return obj;
+  }
 }
+// getAnimalMap({ includeNames: true, sorted: true });
 
 // Ajuda do Pablo para trabalhar entre arrays e objetos;
 function getSchedule(dayName) {
@@ -128,22 +152,22 @@ function increasePrices(percentage) {
 }
 
 /* const IdInName = (arrIds) => {
-  const newArr = [];
-  arrIds.forEach((id) => {
-    species.forEach((animal) => {
-      if (animal.id === id) {
-        newArr.push(animal.name);
-      }
+    const newArr = [];
+    arrIds.forEach((id) => {
+      species.forEach((animal) => {
+        if (animal.id === id) {
+          newArr.push(animal.name);
+        }
+      });
     });
-  });
-  return newArr;
-}; */
+    return newArr;
+  }; */
 function getEmployeeCoverage(idOrName) {
   const obj = {};
   const resp = employees.map((worker) => worker.responsibleFor);
   const IdInName = (arrIds) => arrIds.reduce((acc, id) => (
     acc.concat(species.find((animal) => animal.id === id).name)
-  ), []); // função recebe array de ids e devolve array de nomes (antes de refatorado);
+  ), []); // função recebe array de ids e devolve array de nomes;
   employees.forEach((worker, i) => {
     obj[`${worker.firstName} ${worker.lastName}`] = IdInName(resp[i]);
   }); // função que adiciona chaves com valores no objeto criado;

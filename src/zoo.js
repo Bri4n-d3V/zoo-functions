@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-/* eslint-disable max-lines-per-function */
 const {
   species,
   employees,
@@ -83,57 +81,62 @@ function calculateEntry(entrants) {
   return adult + senior + child;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-function getAnimalMap(options = {}) {
-  if (!options.includeNames) { // teste 1 e 6;
-    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
-    species.forEach((animal) => {
-      obj[animal.location].push(animal.name);
-    }); // func filta animais de acordo com local e add em arrray;
-    return obj; // retorno sem parâmetro;
-  }
-
-  if (options.includeNames && options.sex && options.sorted) { // teste 5;
-    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
-    species.forEach((animal) => {
-      obj[animal.location].push({ [animal.name]:
-        animal.residents.filter((resident) =>
-          (resident.sex === options.sex)).map((resident) =>
-          resident.name).sort() });
-    });
-    return obj;
-  }
-
-  if (options.includeNames && options.sorted) { // teste 3;
-    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
-    species.forEach((animal) => {
-      obj[animal.location].push({ [animal.name]:
+const semParam = () => {
+  const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+  species.forEach((animal) => {
+    obj[animal.location].push(animal.name);
+  }); // func filta animais de acordo com local e add em arrray;
+  return obj; // retorno sem parâmetro;
+};
+const nameSexSorted = (param1) => {
+  const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+  species.forEach((animal) => {
+    obj[animal.location].push({ [animal.name]:
+      animal.residents.filter((resident) =>
+        (resident.sex === param1.sex)).map((resident) =>
+        resident.name).sort() });
+  });
+  return obj;
+};
+const nameSorted = () => {
+  const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+  species.forEach((animal) => {
+    obj[animal.location].push({ [animal.name]:
         animal.residents.map((resident) => resident.name).sort() });
-    });
-    return obj;
-  }
+  });
+  return obj;
+};
+const nameSex = (param2) => {
+  const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+  species.forEach((animal) => {
+    obj[animal.location].push({ [animal.name]:
+      animal.residents.filter((resident) =>
+        (resident.sex === param2.sex)).map((resident) =>
+        resident.name) });
+  });
+  return obj;
+};
+const names = () => {
+  const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
+  species.forEach((animal) => {
+    obj[animal.location].push({ [animal.name]:
+      animal.residents.map((resident) => resident.name) });
+  });
+  return obj;
+};
+const sexSortNames = (param) => {
+  if (param.sex) return nameSex(param);
+  if (param.sorted) return nameSorted();
+  return names();
+};
 
-  if (options.includeNames && options.sex) { // teste 4;
-    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
-    species.forEach((animal) => {
-      obj[animal.location].push({ [animal.name]:
-        animal.residents.filter((resident) =>
-          (resident.sex === options.sex)).map((resident) =>
-          resident.name) });
-    });
-    return obj;
-  }
+function getAnimalMap(options = { includeNames: false, sex: undefined, sorted: false }) {
+  if (!options.includeNames) return semParam(); // teste 1 e 6;
 
-  if (options.includeNames) { // teste 2;
-    const obj = { NE: [], NW: [], SE: [], SW: [] }; // objeto a ser retornado sem paraâmetro;
-    species.forEach((animal) => {
-      obj[animal.location].push({ [animal.name]:
-        animal.residents.map((resident) => resident.name) });
-    });
-    return obj;
-  }
+  if (options.sex && options.sorted) return nameSexSorted(options); // teste 5;
+
+  return sexSortNames(options);// teste 2, 3, 4;
 }
-// getAnimalMap({ includeNames: true, sex: 'male', sorted: true });
 
 // Ajuda do Pablo para trabalhar entre arrays e objetos;
 function getSchedule(dayName) {
